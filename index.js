@@ -25,6 +25,12 @@ async function run() {
       const users = await cursor.toArray();
       res.send(users);
     });
+
+    app.post("/user", async (req, res) => {
+      const product = req.body;
+      const result = await cycleCollection.insertOne(product);
+      res.send(result);
+    });
   } finally {
     // await client.close();
   }
