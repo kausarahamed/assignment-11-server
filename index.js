@@ -1,5 +1,5 @@
 const express = require("express");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const cors = require("cors");
 const port = process.env.PORT || 5000;
 const app = express();
@@ -29,6 +29,13 @@ async function run() {
     app.post("/user", async (req, res) => {
       const product = req.body;
       const result = await cycleCollection.insertOne(product);
+      res.send(result);
+    });
+
+    app.get("/user/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await cycleCollection.findOne(query);
       res.send(result);
     });
   } finally {
