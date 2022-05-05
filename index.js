@@ -19,7 +19,7 @@ async function run() {
   try {
     await client.connect();
     const cycleCollection = client.db("cyclewarehouse").collection("cycle");
-    app.get("/user", async (req, res) => {
+    app.get("/users", async (req, res) => {
       const query = {};
       const cursor = cycleCollection.find(query);
       const users = await cursor.toArray();
