@@ -38,6 +38,13 @@ async function run() {
       const result = await cycleCollection.findOne(query);
       res.send(result);
     });
+
+    app.delete("/user/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await cycleCollection.deleteOne(query);
+      res.send(result);
+    });
   } finally {
     // await client.close();
   }
