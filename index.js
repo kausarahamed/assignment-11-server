@@ -45,6 +45,21 @@ async function run() {
       const result = await cycleCollection.deleteOne(query);
       res.send(result);
     });
+    app.put("/user/:id", async (req, res) => {
+      const id = req.params.id;
+      const quantity = req.body.newQuantity;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: { quantity },
+      };
+      const result = await cycleCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
   } finally {
     // await client.close();
   }
