@@ -1,4 +1,5 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const cors = require("cors");
 const port = process.env.PORT || 5000;
@@ -24,6 +25,15 @@ async function run() {
       const cursor = cycleCollection.find(query);
       const users = await cursor.toArray();
       res.send(users);
+    });
+
+    app.post("/login", async (req, res) => {
+      const user = req.body;
+      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "1d",
+      });
+      res.send({ accessToken });
+      console.log(accessToken);
     });
 
     app.post("/user", async (req, res) => {
